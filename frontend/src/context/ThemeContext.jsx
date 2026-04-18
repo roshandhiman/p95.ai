@@ -10,7 +10,15 @@ export function ThemeProvider({ children }) {
     localStorage.setItem('p95_theme', dark ? 'dark' : 'light');
   }, [dark]);
 
-  const toggle = () => setDark(prev => !prev);
+  const toggle = () => {
+    // Add transition class BEFORE changing theme
+    document.documentElement.classList.add('theme-transitioning');
+    setDark(prev => !prev);
+    // Remove class after transition completes
+    setTimeout(() => {
+      document.documentElement.classList.remove('theme-transitioning');
+    }, 500);
+  };
 
   return (
     <ThemeContext.Provider value={{ dark, toggle }}>

@@ -173,5 +173,15 @@
 [data-theme="dark"] ::-webkit-scrollbar-track { background: var(--bg-primary); }
 [data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--border-secondary); border-radius: 3px; }
 
-/* Smooth theme transition */
-* { transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease, box-shadow 0.2s ease; }
+/* Smooth theme transition — applied temporarily during toggle */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.4s ease !important,
+              border-color 0.4s ease !important,
+              color 0.3s ease !important,
+              box-shadow 0.4s ease !important,
+              fill 0.3s ease !important,
+              stroke 0.3s ease !important;
+}
