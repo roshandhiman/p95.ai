@@ -9,45 +9,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const dbPath = path.resolve(__dirname, '../database/database.sqlite');
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) console.error("Database connection error:", err);
-  else console.log("Connected to SQLite Database.");
-});
+const dbPath = path.resolve(__dirname, '../database/data.json');
+let leads = [];
 
-// ======================== SCHEMA ========================
-db.serialize(() => {
-  db.run(`CREATE TABLE IF NOT EXISTS leads (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    domain TEXT,
-    industry TEXT,
-    size TEXT,
-    funding TEXT,
-    techStack TEXT,
-    source TEXT,
-    hiring BOOLEAN,
-    icpScore INTEGER,
-    score TEXT
-  )`);
-
-  db.get("SELECT COUNT(*) as count FROM leads", (err, row) => {
-    if (row && row.count === 0) {
-      try {
-        const seedPath = path.resolve(__dirname, '../database/data.json');
-        const seedData = JSON.parse(fs.readFileSync(seedPath, 'utf8'));
-        const stmt = db.prepare("INSERT INTO leads (name, domain, industry, size, funding, techStack, source, hiring, icpScore, score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        seedData.forEach(lead => {
-          stmt.run(lead.name, lead.domain, lead.industry, lead.size, lead.funding, lead.techStack, lead.source, lead.hiring, lead.icpScore, lead.score);
-        });
-        stmt.finalize();
-        console.log(`Database seeded with ${seedData.length} leads.`);
-      } catch (e) {
-        console.error("Failed to seed data:", e);
-      }
-    }
-  });
-});
+try {
+  const seedData = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+  leads = seedData;
+  console.log(`Loaded ${leads.length} leads into memory.`);
+} catch (e) {
+  console.error("Failed to load data:", e);
+}
 
 // ======================== AUTH ========================
 app.post('/api/auth', (req, res) => {
@@ -62,47 +33,38 @@ app.post('/api/auth', (req, res) => {
 
 // ======================== LEADS ========================
 app.get('/api/leads', (req, res) => {
-  db.all("SELECT * FROM leads ORDER BY icpScore DESC", (err, rows) => {
-    if (err) res.status(500).json({ error: err.message });
-    else res.json(rows);
-  });
+  res.json([...leads].sort((a, b) => b.icpScore - a.icpScore));
 });
 
 // Get count stats
 app.get('/api/leads/stats', (req, res) => {
-  db.all("SELECT score, COUNT(*) as count FROM leads GROUP BY score", (err, rows) => {
-    if (err) res.status(500).json({ error: err.message });
-    else {
-      const stats = { total: 0, hot: 0, warm: 0, cold: 0, sources: {} };
-      rows.forEach(r => {
-        stats.total += r.count;
-        if (r.score === 'Hot') stats.hot = r.count;
-        else if (r.score === 'Warm') stats.warm = r.count;
-        else stats.cold = r.count;
-      });
-      // Source breakdown
-      db.all("SELECT source, COUNT(*) as count FROM leads GROUP BY source", (err2, srcRows) => {
-        if (!err2) srcRows.forEach(s => stats.sources[s.source] = s.count);
-        res.json(stats);
-      });
+  const stats = { total: leads.length, hot: 0, warm: 0, cold: 0, sources: {} };
+  leads.forEach(r => {
+    if (r.score === 'Hot') stats.hot++;
+    else if (r.score === 'Warm') stats.warm++;
+    else stats.cold++;
+    
+    if (r.source) {
+      stats.sources[r.source] = (stats.sources[r.source] || 0) + 1;
     }
   });
+  res.json(stats);
 });
 
 // Top 50 for outreach
 app.get('/api/leads/top50', (req, res) => {
-  db.all("SELECT * FROM leads WHERE score IN ('Hot','Warm') ORDER BY icpScore DESC LIMIT 50", (err, rows) => {
-    if (err) res.status(500).json({ error: err.message });
-    else res.json(rows);
-  });
+  const top = leads.filter(l => l.score === 'Hot' || l.score === 'Warm')
+                   .sort((a, b) => b.icpScore - a.icpScore)
+                   .slice(0, 50);
+  res.json(top);
 });
 
 // Top 20 for A/B testing
 app.get('/api/leads/top20', (req, res) => {
-  db.all("SELECT * FROM leads WHERE score = 'Hot' ORDER BY icpScore DESC LIMIT 20", (err, rows) => {
-    if (err) res.status(500).json({ error: err.message });
-    else res.json(rows);
-  });
+  const top = leads.filter(l => l.score === 'Hot')
+                   .sort((a, b) => b.icpScore - a.icpScore)
+                   .slice(0, 20);
+  res.json(top);
 });
 
 // ======================== SCORING ENGINE ========================
@@ -133,13 +95,9 @@ app.post('/api/leads', (req, res) => {
   const { name, domain, industry, size, hiring, funding, techStack, source } = req.body;
   const { icpScore, score } = calculateScore(size, industry, hiring, funding, techStack);
   
-  db.run(`INSERT INTO leads (name, domain, industry, size, funding, techStack, source, hiring, icpScore, score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [name, domain, industry, size, funding, techStack, source, hiring, icpScore, score],
-    function(err) {
-      if (err) res.status(500).json({ error: err.message });
-      else res.json({ id: this.lastID, name, score, icpScore, success: true });
-    }
-  );
+  const newLead = { id: leads.length + 1, name, domain, industry, size, funding, techStack, source, hiring, icpScore, score };
+  leads.push(newLead);
+  res.json({ id: newLead.id, name, score, icpScore, success: true });
 });
 
 // ======================== OUTREACH GENERATION ========================
