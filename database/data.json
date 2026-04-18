@@ -1,9 +1,1352 @@
 [
-  { "name": "Acme AI", "industry": "SaaS", "size": "50-200", "hiring": true, "score": "Hot" },
-  { "name": "Globex Corp", "industry": "Fintech", "size": "200-500", "hiring": false, "score": "Warm" },
-  { "name": "Soylent Inc", "industry": "Foodtech", "size": "1-50", "hiring": false, "score": "Cold" },
-  { "name": "Initech", "industry": "SaaS", "size": "500+", "hiring": true, "score": "Warm" },
-  { "name": "Umbrella Corp", "industry": "Healthtech", "size": "50-200", "hiring": true, "score": "Hot" },
-  { "name": "Stark Industries", "industry": "AI/ML", "size": "200-500", "hiring": true, "score": "Hot" },
-  { "name": "Wayne Enterprises", "industry": "Fintech", "size": "500+", "hiring": false, "score": "Cold" }
+  {
+    "name": "OpenAI",
+    "domain": "openai.com",
+    "industry": "AI/ML",
+    "size": "1-50",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Anthropic",
+    "domain": "anthropic.com",
+    "industry": "AI/ML",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "Scale AI",
+    "domain": "scale.com",
+    "industry": "AI/ML",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "Glean",
+    "domain": "glean.com",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "Pinecone",
+    "domain": "pinecone.io",
+    "industry": "AI/ML",
+    "size": "500+",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Vercel",
+    "domain": "vercel.com",
+    "industry": "Cloud Infra",
+    "size": "1-50",
+    "hiring": true,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Stripe",
+    "domain": "stripe.com",
+    "industry": "Fintech",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "Hugging Face",
+    "domain": "huggingface.co",
+    "industry": "AI/ML",
+    "size": "500+",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Cohere",
+    "domain": "cohere.com",
+    "industry": "AI/ML",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "Mistral AI",
+    "domain": "mistral.ai",
+    "industry": "AI/ML",
+    "size": "50-200",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "LangChain",
+    "domain": "langchain.com",
+    "industry": "AI/ML",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "Databricks",
+    "domain": "databricks.com",
+    "industry": "Data Analytics",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "Snowflake",
+    "domain": "snowflake.com",
+    "industry": "Data Analytics",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Plaid",
+    "domain": "plaid.com",
+    "industry": "Fintech",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "Brex",
+    "domain": "brex.com",
+    "industry": "Fintech",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "Ramp",
+    "domain": "ramp.com",
+    "industry": "Fintech",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Linear",
+    "domain": "linear.app",
+    "industry": "SaaS",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "Notion",
+    "domain": "notion.so",
+    "industry": "SaaS",
+    "size": "500+",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "Figma",
+    "domain": "figma.com",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Canva",
+    "domain": "canva.com",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "Airtable",
+    "domain": "airtable.com",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Retool",
+    "domain": "retool.com",
+    "industry": "SaaS",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "Supabase",
+    "domain": "supabase.com",
+    "industry": "Cloud Infra",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Railway",
+    "domain": "railway.app",
+    "industry": "Cloud Infra",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "Render",
+    "domain": "render.com",
+    "industry": "Cloud Infra",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "Fly.io",
+    "domain": "fly.io",
+    "industry": "Cloud Infra",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Clerk",
+    "domain": "clerk.com",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Auth0",
+    "domain": "auth0.com",
+    "industry": "Cloud Infra",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Resend",
+    "domain": "resend.com",
+    "industry": "SaaS",
+    "size": "50-200",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "PostHog",
+    "domain": "posthog.com",
+    "industry": "Data Analytics",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "Segment",
+    "domain": "segment.com",
+    "industry": "Data Analytics",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "Fivetran",
+    "domain": "fivetran.com",
+    "industry": "Data Analytics",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "Zapier",
+    "domain": "zapier.com",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Make",
+    "domain": "make.com",
+    "industry": "SaaS",
+    "size": "500+",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Webflow",
+    "domain": "webflow.com",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Framer",
+    "domain": "framer.com",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Algolia",
+    "domain": "algolia.com",
+    "industry": "Cloud Infra",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Netlify",
+    "domain": "netlify.com",
+    "industry": "Cloud Infra",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "Cloudflare",
+    "domain": "cloudflare.com",
+    "industry": "Cloud Infra",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "Datadog",
+    "domain": "datadoghq.com",
+    "industry": "Cloud Infra",
+    "size": "50-200",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Wiz",
+    "domain": "wiz.io",
+    "industry": "Cybersecurity",
+    "size": "50-200",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Snyk",
+    "domain": "snyk.io",
+    "industry": "Cybersecurity",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "CrowdStrike",
+    "domain": "crowdstrike.com",
+    "industry": "Cybersecurity",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "Palo Alto",
+    "domain": "paloaltonetworks.com",
+    "industry": "Cybersecurity",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Gong",
+    "domain": "gong.io",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "Apollo.io",
+    "domain": "apollo.io",
+    "industry": "SaaS",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "Clay.com",
+    "domain": "clay.com",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Clearbit",
+    "domain": "clearbit.com",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "ZoomInfo",
+    "domain": "zoominfo.com",
+    "industry": "SaaS",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Deel",
+    "domain": "deel.com",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Rippling",
+    "domain": "rippling.com",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "Gusto",
+    "domain": "gusto.com",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "Lattice",
+    "domain": "lattice.com",
+    "industry": "SaaS",
+    "size": "500+",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Zenefits",
+    "domain": "zenefits.com",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "Asana",
+    "domain": "asana.com",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "Monday.com",
+    "domain": "monday.com",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "Smartsheet",
+    "domain": "smartsheet.com",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "Miro",
+    "domain": "miro.com",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "Mural",
+    "domain": "mural.co",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "Lucid",
+    "domain": "lucid.co",
+    "industry": "SaaS",
+    "size": "500+",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "CyberTech",
+    "domain": "cybertech.com",
+    "industry": "Cloud Infra",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "DeepScale",
+    "domain": "deepscale.io",
+    "industry": "Fintech",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "DeepSystems",
+    "domain": "deepsystems.io",
+    "industry": "Data Analytics",
+    "size": "500+",
+    "hiring": true,
+    "score": "Warm",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "CyberSystems",
+    "domain": "cybersystems.io",
+    "industry": "Cybersecurity",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "HealthMatrix",
+    "domain": "healthmatrix.io",
+    "industry": "Fintech",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "HealthScale",
+    "domain": "healthscale.com",
+    "industry": "Fintech",
+    "size": "50-200",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "HealthMatrix",
+    "domain": "healthmatrix.io",
+    "industry": "Data Analytics",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "AeroMatrix",
+    "domain": "aeromatrix.com",
+    "industry": "AI/ML",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "CloudTech",
+    "domain": "cloudtech.com",
+    "industry": "Fintech",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "DataSecurity",
+    "domain": "datasecurity.com",
+    "industry": "Cybersecurity",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "QuantumScale",
+    "domain": "quantumscale.io",
+    "industry": "Cybersecurity",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "FinAI",
+    "domain": "finai.com",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "NeuralLabs",
+    "domain": "neurallabs.com",
+    "industry": "SaaS",
+    "size": "500+",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "SynTech",
+    "domain": "syntech.com",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "CloudMatrix",
+    "domain": "cloudmatrix.io",
+    "industry": "Cybersecurity",
+    "size": "50-200",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "DataAnalytics",
+    "domain": "dataanalytics.io",
+    "industry": "Fintech",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "QuantumAnalytics",
+    "domain": "quantumanalytics.io",
+    "industry": "AI/ML",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "AeroMatrix",
+    "domain": "aeromatrix.io",
+    "industry": "Cybersecurity",
+    "size": "500+",
+    "hiring": true,
+    "score": "Warm",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "FinAnalytics",
+    "domain": "finanalytics.com",
+    "industry": "SaaS",
+    "size": "500+",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "SynLabs",
+    "domain": "synlabs.com",
+    "industry": "Fintech",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "NeuralAI",
+    "domain": "neuralai.io",
+    "industry": "Cybersecurity",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "CyberAI",
+    "domain": "cyberai.io",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "AeroNetworks",
+    "domain": "aeronetworks.io",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "CyberAnalytics",
+    "domain": "cyberanalytics.com",
+    "industry": "Fintech",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "NeuralMatrix",
+    "domain": "neuralmatrix.io",
+    "industry": "Cloud Infra",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "CyberScale",
+    "domain": "cyberscale.io",
+    "industry": "SaaS",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "QuantumMatrix",
+    "domain": "quantummatrix.com",
+    "industry": "Fintech",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "CloudBase",
+    "domain": "cloudbase.com",
+    "industry": "Cybersecurity",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "CloudLabs",
+    "domain": "cloudlabs.com",
+    "industry": "Data Analytics",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "QuantumNetworks",
+    "domain": "quantumnetworks.com",
+    "industry": "Cloud Infra",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "DataSecurity",
+    "domain": "datasecurity.io",
+    "industry": "AI/ML",
+    "size": "500+",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "AeroBase",
+    "domain": "aerobase.io",
+    "industry": "SaaS",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "CloudBase",
+    "domain": "cloudbase.io",
+    "industry": "SaaS",
+    "size": "500+",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "HealthTech",
+    "domain": "healthtech.com",
+    "industry": "AI/ML",
+    "size": "500+",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "NeuralNetworks",
+    "domain": "neuralnetworks.io",
+    "industry": "AI/ML",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "DataAI",
+    "domain": "dataai.com",
+    "industry": "Cybersecurity",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "QuantumSecurity",
+    "domain": "quantumsecurity.com",
+    "industry": "Cybersecurity",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "CyberScale",
+    "domain": "cyberscale.io",
+    "industry": "Cloud Infra",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "QuantumSystems",
+    "domain": "quantumsystems.com",
+    "industry": "AI/ML",
+    "size": "500+",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "DataNetworks",
+    "domain": "datanetworks.com",
+    "industry": "AI/ML",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "AeroAI",
+    "domain": "aeroai.io",
+    "industry": "Cloud Infra",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "FinAI",
+    "domain": "finai.io",
+    "industry": "Cybersecurity",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "QuantumAI",
+    "domain": "quantumai.com",
+    "industry": "Cloud Infra",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "FinNetworks",
+    "domain": "finnetworks.io",
+    "industry": "Cloud Infra",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "HealthSecurity",
+    "domain": "healthsecurity.io",
+    "industry": "AI/ML",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "HealthBase",
+    "domain": "healthbase.io",
+    "industry": "Fintech",
+    "size": "500+",
+    "hiring": true,
+    "score": "Warm",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "CyberSystems",
+    "domain": "cybersystems.io",
+    "industry": "Cloud Infra",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "DeepAnalytics",
+    "domain": "deepanalytics.io",
+    "industry": "SaaS",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "DeepSystems",
+    "domain": "deepsystems.com",
+    "industry": "Data Analytics",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "NeuralSecurity",
+    "domain": "neuralsecurity.com",
+    "industry": "AI/ML",
+    "size": "1-50",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "QuantumAnalytics",
+    "domain": "quantumanalytics.com",
+    "industry": "Fintech",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "SynLabs",
+    "domain": "synlabs.io",
+    "industry": "Data Analytics",
+    "size": "1-50",
+    "hiring": true,
+    "score": "Warm",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "AeroMatrix",
+    "domain": "aeromatrix.com",
+    "industry": "Cloud Infra",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "HealthLabs",
+    "domain": "healthlabs.com",
+    "industry": "SaaS",
+    "size": "500+",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "DataNetworks",
+    "domain": "datanetworks.io",
+    "industry": "Data Analytics",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "AeroLabs",
+    "domain": "aerolabs.com",
+    "industry": "Cloud Infra",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "HealthSystems",
+    "domain": "healthsystems.com",
+    "industry": "Cloud Infra",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "SynAI",
+    "domain": "synai.com",
+    "industry": "Cloud Infra",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "FinAnalytics",
+    "domain": "finanalytics.com",
+    "industry": "AI/ML",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "HealthAnalytics",
+    "domain": "healthanalytics.com",
+    "industry": "Cybersecurity",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "CyberSecurity",
+    "domain": "cybersecurity.io",
+    "industry": "AI/ML",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "NeuralMatrix",
+    "domain": "neuralmatrix.io",
+    "industry": "Fintech",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "CyberAI",
+    "domain": "cyberai.io",
+    "industry": "AI/ML",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "FinSystems",
+    "domain": "finsystems.com",
+    "industry": "AI/ML",
+    "size": "500+",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "HealthSystems",
+    "domain": "healthsystems.io",
+    "industry": "Data Analytics",
+    "size": "50-200",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "DataLabs",
+    "domain": "datalabs.io",
+    "industry": "Data Analytics",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "NeuralSecurity",
+    "domain": "neuralsecurity.com",
+    "industry": "Fintech",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "NeuralSystems",
+    "domain": "neuralsystems.com",
+    "industry": "AI/ML",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "SynScale",
+    "domain": "synscale.com",
+    "industry": "Data Analytics",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "CyberNetworks",
+    "domain": "cybernetworks.io",
+    "industry": "Cloud Infra",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "DeepSystems",
+    "domain": "deepsystems.com",
+    "industry": "Fintech",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "HealthLabs",
+    "domain": "healthlabs.com",
+    "industry": "AI/ML",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "CloudAI",
+    "domain": "cloudai.io",
+    "industry": "Data Analytics",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "CyberNetworks",
+    "domain": "cybernetworks.com",
+    "industry": "Cybersecurity",
+    "size": "200-500",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Azure, Angular, .NET"
+  },
+  {
+    "name": "SynBase",
+    "domain": "synbase.io",
+    "industry": "Cybersecurity",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Svelte, Rust"
+  },
+  {
+    "name": "CloudScale",
+    "domain": "cloudscale.io",
+    "industry": "Fintech",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "DataNetworks",
+    "domain": "datanetworks.com",
+    "industry": "AI/ML",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "QuantumSystems",
+    "domain": "quantumsystems.com",
+    "industry": "Cloud Infra",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "CloudAI",
+    "domain": "cloudai.com",
+    "industry": "Fintech",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "CloudBase",
+    "domain": "cloudbase.com",
+    "industry": "Cloud Infra",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "QuantumMatrix",
+    "domain": "quantummatrix.com",
+    "industry": "Cybersecurity",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "QuantumBase",
+    "domain": "quantumbase.io",
+    "industry": "Data Analytics",
+    "size": "1-50",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "NeuralTech",
+    "domain": "neuraltech.io",
+    "industry": "Cloud Infra",
+    "size": "50-200",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "Vercel, React, TS"
+  },
+  {
+    "name": "CloudAnalytics",
+    "domain": "cloudanalytics.io",
+    "industry": "SaaS",
+    "size": "50-200",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "HealthSystems",
+    "domain": "healthsystems.io",
+    "industry": "Data Analytics",
+    "size": "500+",
+    "hiring": false,
+    "score": "Cold",
+    "platform": "AWS, Next.js, Go"
+  },
+  {
+    "name": "DeepAI",
+    "domain": "deepai.io",
+    "industry": "Cybersecurity",
+    "size": "50-200",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "NeuralScale",
+    "domain": "neuralscale.io",
+    "industry": "Fintech",
+    "size": "50-200",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "CloudMatrix",
+    "domain": "cloudmatrix.io",
+    "industry": "Cybersecurity",
+    "size": "500+",
+    "hiring": true,
+    "score": "Warm",
+    "platform": "AWS, React, Node"
+  },
+  {
+    "name": "QuantumSecurity",
+    "domain": "quantumsecurity.io",
+    "industry": "Fintech",
+    "size": "200-500",
+    "hiring": true,
+    "score": "Hot",
+    "platform": "GCP, Vue, Python"
+  },
+  {
+    "name": "NeuralBase",
+    "domain": "neuralbase.io",
+    "industry": "Fintech",
+    "size": "50-200",
+    "hiring": false,
+    "score": "Warm",
+    "platform": "AWS, Svelte, Rust"
+  }
 ]

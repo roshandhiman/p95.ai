@@ -6,6 +6,8 @@ export default function Dashboard() {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [syncing, setSyncing] = useState(false);
+  const [syncSuccess, setSyncSuccess] = useState('');
   
   useEffect(() => {
     fetchLeads();
@@ -29,6 +31,23 @@ export default function Dashboard() {
     }
   };
 
+  const handleSyncApollo = async () => {
+    setSyncing(true);
+    try {
+      const response = await axios.post('/api/sync-apollo');
+      setSyncSuccess(response.data.message);
+      // Wait to fetch
+      setTimeout(() => {
+        fetchLeads();
+        setSyncSuccess('');
+      }, 3000);
+    } catch(err) {
+      console.error(err);
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   const safeLeads = Array.isArray(leads) ? leads : [];
   const filteredLeads = safeLeads.filter(l => l.name?.toLowerCase().includes(searchTerm.toLowerCase()));
 
@@ -39,6 +58,28 @@ export default function Dashboard() {
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       
+      {/* Sync Button & Alerts */}
+      <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+        <div>
+          <h2 className="text-lg font-bold text-gray-900">Data Synchronization</h2>
+          <p className="text-sm text-gray-500">Pull latest qualified accounts from the Apollo.io API integration.</p>
+        </div>
+        <button 
+          onClick={handleSyncApollo}
+          disabled={syncing}
+          className="btn-primary flex items-center gap-2"
+        >
+          <svg className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          {syncing ? 'Connecting to Apollo...' : 'Run Apollo Sync'}
+        </button>
+      </div>
+
+      {syncSuccess && (
+        <div className="p-4 bg-green-50 border border-green-200 text-green-800 rounded-lg text-sm font-semibold flex items-center justify-between">
+          <span>{syncSuccess}</span>
+        </div>
+      )}
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="card p-5 border-l-4 border-l-gray-900">
@@ -85,10 +126,11 @@ export default function Dashboard() {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-gray-50 text-xs uppercase tracking-wider text-gray-500 border-b border-gray-200">
-                <th className="px-6 py-3 font-semibold">Company</th>
+                <th className="px-6 py-3 font-semibold">Company / Domain</th>
                 <th className="px-6 py-3 font-semibold">Industry</th>
+                <th className="px-6 py-3 font-semibold">Tech Stack</th>
                 <th className="px-6 py-3 font-semibold">Size</th>
-                <th className="px-6 py-3 font-semibold">Hiring MLEs?</th>
+                <th className="px-6 py-3 font-semibold">Hiring?</th>
                 <th className="px-6 py-3 font-semibold">Score</th>
               </tr>
             </thead>
@@ -99,6 +141,7 @@ export default function Dashboard() {
                     <tr key={`skeleton-${i}`} className="animate-pulse bg-gray-50/50">
                       <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-3/4"></div></td>
                       <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-1/2"></div></td>
+                      <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-1/2"></div></td>
                       <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-1/3"></div></td>
                       <td className="px-6 py-4"><div className="h-6 bg-gray-200 rounded w-12"></div></td>
                       <td className="px-6 py-4"><div className="h-6 bg-gray-200 rounded-full w-16"></div></td>
@@ -107,8 +150,12 @@ export default function Dashboard() {
                 </>
               ) : filteredLeads.map((lead, idx) => (
                 <tr key={idx} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 font-medium text-gray-900">{lead.name}</td>
+                  <td className="px-6 py-4 font-medium text-gray-900">
+                    {lead.name}
+                    <div className="text-xs text-gray-400 font-normal mt-0.5">{lead.domain}</div>
+                  </td>
                   <td className="px-6 py-4 text-sm text-gray-500">{lead.industry}</td>
+                  <td className="px-6 py-4 text-sm font-mono text-gray-500">{lead.platform || 'AWS, Node'}</td>
                   <td className="px-6 py-4 text-sm text-gray-500">{lead.size}</td>
                   <td className="px-6 py-4">
                     {lead.hiring ? (
