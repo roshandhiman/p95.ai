@@ -4,13 +4,17 @@ import App from './App.jsx'
 import './index.css'
 import { LangProvider } from './context/LangContext.jsx'
 import { ProfileProvider } from './context/ProfileContext.jsx'
+import { ThemeProvider } from './context/ThemeContext.jsx'
+import './mockBackend.js'; // Intercepts all backend calls natively
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <LangProvider>
-      <ProfileProvider>
-        <App />
-      </ProfileProvider>
-    </LangProvider>
+    <ThemeProvider>
+      <LangProvider>
+        <ProfileProvider>
+          <App />
+        </ProfileProvider>
+      </LangProvider>
+    </ThemeProvider>
   </React.StrictMode>,
 )
