@@ -4,16 +4,13 @@ import App from './App.jsx'
 import './index.css'
 import { LangProvider } from './context/LangContext.jsx'
 import { ProfileProvider } from './context/ProfileContext.jsx'
-import { ThemeProvider } from './context/ThemeContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ThemeProvider>
-      <LangProvider>
-        <ProfileProvider>
-          <App />
-        </ProfileProvider>
-      </LangProvider>
-    </ThemeProvider>
+    <LangProvider>
+      <ProfileProvider>
+        <App />
+      </ProfileProvider>
+    </LangProvider>
   </React.StrictMode>,
 )
