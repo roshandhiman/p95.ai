@@ -1,5 +1,5 @@
 import axios from 'axios';
-import seedData from '../../database/data.json';
+import seedData from './data.json';
 
 // In-memory database
 let leads = [...seedData];
