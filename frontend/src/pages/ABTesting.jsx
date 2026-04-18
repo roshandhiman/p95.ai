@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Beaker, Flame, ArrowRight } from 'lucide-react';
 import axios from 'axios';
+import { useProfile } from '../context/ProfileContext';
 
 export default function ABTesting() {
   const [leads, setLeads] = useState([]);
@@ -8,6 +9,7 @@ export default function ABTesting() {
   const [variants, setVariants] = useState({});
   const [generating, setGenerating] = useState(null);
   const [selectedLead, setSelectedLead] = useState(null);
+  const { profile } = useProfile();
 
   useEffect(() => {
     axios.get('/api/leads/top20').then(res => {
@@ -19,7 +21,7 @@ export default function ABTesting() {
   const generateVariants = async (lead) => {
     setGenerating(lead.id);
     try {
-      const res = await axios.post('/api/generate-ab', { lead });
+      const res = await axios.post('/api/generate-ab', { lead, sender: profile });
       setVariants(prev => ({ ...prev, [lead.id]: res.data }));
       setSelectedLead(lead.id);
     } catch(e) { console.error(e); }

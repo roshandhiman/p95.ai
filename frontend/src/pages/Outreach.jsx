@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Mail, Linkedin, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 import axios from 'axios';
+import { useProfile } from '../context/ProfileContext';
 
 export default function Outreach() {
   const [leads, setLeads] = useState([]);
@@ -8,6 +9,7 @@ export default function Outreach() {
   const [expandedId, setExpandedId] = useState(null);
   const [generatedMessages, setGeneratedMessages] = useState({});
   const [generating, setGenerating] = useState(null);
+  const { profile } = useProfile();
 
   useEffect(() => {
     axios.get('/api/leads/top50').then(res => {
@@ -19,7 +21,7 @@ export default function Outreach() {
   const generateForLead = async (lead) => {
     setGenerating(lead.id);
     try {
-      const res = await axios.post('/api/generate-outreach', { lead });
+      const res = await axios.post('/api/generate-outreach', { lead, sender: profile });
       setGeneratedMessages(prev => ({ ...prev, [lead.id]: res.data }));
     } catch(e) { console.error(e); }
     finally { setGenerating(null); }

@@ -18,7 +18,7 @@ export default function Auth({ setSession }) {
       const mockToken = "mock_jwt_token_" + Date.now();
       localStorage.setItem('token', mockToken);
       setSession(mockToken);
-      navigate('/');
+      navigate('/app');
     }, 500);
   };
 

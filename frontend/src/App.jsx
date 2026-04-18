@@ -7,6 +7,7 @@ import Outreach from './pages/Outreach';
 import ABTesting from './pages/ABTesting';
 import ICPFramework from './pages/ICPFramework';
 import Sender from './pages/Sender';
+import Profile from './pages/Profile';
 import Layout from './components/Layout';
 import { useState, useEffect } from 'react';
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="/ab-testing" element={<ProtectedRoute><Layout><ABTesting /></Layout></ProtectedRoute>} />
         <Route path="/icp" element={<ProtectedRoute><Layout><ICPFramework /></Layout></ProtectedRoute>} />
         <Route path="/sender" element={<ProtectedRoute><Layout><Sender /></Layout></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Layout><Profile /></Layout></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
