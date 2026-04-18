@@ -1,0 +1,9 @@
+[
+  { "name": "Acme AI", "industry": "SaaS", "size": "50-200", "hiring": true, "score": "Hot" },
+  { "name": "Globex Corp", "industry": "Fintech", "size": "200-500", "hiring": false, "score": "Warm" },
+  { "name": "Soylent Inc", "industry": "Foodtech", "size": "1-50", "hiring": false, "score": "Cold" },
+  { "name": "Initech", "industry": "SaaS", "size": "500+", "hiring": true, "score": "Warm" },
+  { "name": "Umbrella Corp", "industry": "Healthtech", "size": "50-200", "hiring": true, "score": "Hot" },
+  { "name": "Stark Industries", "industry": "AI/ML", "size": "200-500", "hiring": true, "score": "Hot" },
+  { "name": "Wayne Enterprises", "industry": "Fintech", "size": "500+", "hiring": false, "score": "Cold" }
+]
