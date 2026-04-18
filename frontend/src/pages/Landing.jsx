@@ -70,7 +70,7 @@ export default function Landing() {
             <div className="p-8 font-mono text-sm leading-relaxed overflow-x-hidden">
               <div className="text-green-400 mb-2">14:02:01 <span className="text-blue-400">[Clay_Enrich]</span> Webhook payload received. 200+ enterprise leads extracted.</div>
               <div className="text-green-400 mb-2">14:02:04 <span className="text-blue-400">[Scorer_ML]</span> Evaluated firmographics against ICP constraints...</div>
-              <div className="text-green-400 mb-2">14:02:08 <span className="text-yellow-400">[Pipeline]</span> ==> Identified 87 accounts actively hiring MLEs (Score: HOT)</div>
+              <div className="text-green-400 mb-2">14:02:08 <span className="text-yellow-400">[Pipeline]</span> {'==>'} Identified 87 accounts actively hiring MLEs (Score: HOT)</div>
               <div className="text-gray-400 mt-6 animate-pulse">Waiting for execution directive..._</div>
             </div>
           </div>
