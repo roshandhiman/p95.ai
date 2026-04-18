@@ -1,13 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Shield, Zap, Beaker, Target, Mail, LogOut, User, Globe } from 'lucide-react';
+import { LayoutDashboard, Shield, Zap, Beaker, Target, Mail, LogOut, User, Globe, Sun, Moon } from 'lucide-react';
 import AdvisorChat from './AdvisorChat';
 import { useProfile } from '../context/ProfileContext';
 import { useLang } from '../context/LangContext';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Layout({ children }) {
   const location = useLocation();
   const { profile } = useProfile();
   const { t, lang, switchLang, languages } = useLang();
+  const { dark, toggle } = useTheme();
 
   const langLabels = { en: 'EN', hi: 'हिं', es: 'ES', fr: 'FR' };
 
@@ -21,11 +23,11 @@ export default function Layout({ children }) {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div className="flex h-screen overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
       {/* Sidebar */}
-      <aside className="w-60 bg-white border-r border-gray-200 flex flex-col">
-        <Link to="/" className="p-5 flex items-center gap-2 font-black text-gray-900 border-b border-gray-100 tracking-tight hover:bg-gray-50 transition-colors">
-          <div className="w-8 h-8 rounded bg-gray-900 text-white flex items-center justify-center text-sm font-black">P</div>
+      <aside className="w-60 flex flex-col" style={{ background: 'var(--sidebar-bg)', borderRight: '1px solid var(--border-primary)' }}>
+        <Link to="/" className="p-5 flex items-center gap-2 font-black tracking-tight hover:opacity-80 transition-opacity" style={{ color: 'var(--text-primary)', borderBottom: '1px solid var(--border-primary)' }}>
+          <div className="w-8 h-8 rounded flex items-center justify-center text-sm font-black" style={{ background: 'var(--btn-bg)', color: 'var(--btn-text)' }}>P</div>
           P95.AI
         </Link>
         
@@ -34,9 +36,11 @@ export default function Layout({ children }) {
             const isActive = location.pathname === item.path;
             return (
               <Link key={item.path} to={item.path}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  isActive ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
-                }`}>
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
+                style={{
+                  background: isActive ? 'var(--bg-tertiary)' : 'transparent',
+                  color: isActive ? 'var(--text-primary)' : 'var(--text-tertiary)',
+                }}>
                 {item.icon}
                 {item.name}
               </Link>
@@ -44,16 +48,18 @@ export default function Layout({ children }) {
           })}
         </nav>
 
-        {/* Profile Link + Logout */}
-        <div className="p-3 border-t border-gray-100 space-y-0.5">
-          <Link to="/profile" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-            location.pathname === '/profile' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
-          }`}>
+        <div className="p-3 space-y-0.5" style={{ borderTop: '1px solid var(--border-primary)' }}>
+          <Link to="/profile" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
+            style={{ 
+              background: location.pathname === '/profile' ? 'var(--bg-tertiary)' : 'transparent',
+              color: location.pathname === '/profile' ? 'var(--text-primary)' : 'var(--text-tertiary)'
+            }}>
             <User size={18} />
             {t('nav.profile')}
           </Link>
           <button onClick={() => { localStorage.removeItem('token'); window.location.href = "/login"; }}
-            className="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors">
+            className="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-sm font-medium transition-colors"
+            style={{ color: 'var(--text-tertiary)' }}>
             <LogOut size={18} />
             {t('nav.logout')}
           </button>
@@ -62,34 +68,46 @@ export default function Layout({ children }) {
 
       {/* Main */}
       <div className="flex-1 flex flex-col relative w-full h-full">
-        <header className="h-14 bg-white border-b border-gray-200 flex items-center px-6 justify-between z-10 sticky top-0">
-          <h1 className="text-sm font-bold text-gray-900">
+        <header className="h-14 flex items-center px-6 justify-between z-10 sticky top-0" style={{ background: 'var(--header-bg)', borderBottom: '1px solid var(--border-primary)' }}>
+          <h1 className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
             {navItems.find(i => i.path === location.pathname)?.name || (location.pathname === '/profile' ? t('nav.profile') : 'Platform')}
           </h1>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <button onClick={toggle}
+              className="w-9 h-9 rounded-lg flex items-center justify-center transition-all hover:scale-105"
+              style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}
+              title={dark ? 'Switch to Light' : 'Switch to Dark'}>
+              {dark ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+
             {/* Language Switcher */}
-            <div className="flex items-center gap-1 bg-gray-50 rounded-lg border border-gray-200 p-0.5">
+            <div className="flex items-center gap-0.5 rounded-lg p-0.5" style={{ background: 'var(--bg-tertiary)' }}>
               {languages.map(l => (
                 <button key={l} onClick={() => switchLang(l)}
-                  className={`px-2 py-1 rounded text-[11px] font-bold transition-colors ${lang === l ? 'bg-gray-900 text-white' : 'text-gray-500 hover:text-gray-900'}`}>
+                  className="px-2 py-1 rounded text-[11px] font-bold transition-colors"
+                  style={{
+                    background: lang === l ? 'var(--btn-bg)' : 'transparent',
+                    color: lang === l ? 'var(--btn-text)' : 'var(--text-tertiary)'
+                  }}>
                   {langLabels[l]}
                 </button>
               ))}
             </div>
 
-            <div className="text-[10px] font-mono text-gray-400">203 {t('common.leads')} · 6 {t('common.platforms')}</div>
-            <div className="font-mono text-xs px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">{t('common.online')}</div>
+            <div className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ color: 'var(--text-tertiary)' }}>203 {t('common.leads')}</div>
+            <div className="font-mono text-xs px-2 py-0.5 rounded" style={{ background: 'var(--badge-cold-bg)', color: '#22c55e', border: '1px solid #166534' }}>{t('common.online')}</div>
 
             {/* Profile Avatar */}
             <Link to="/profile" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <div className="w-8 h-8 rounded-full bg-gray-100 border border-gray-200 overflow-hidden flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0" style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-primary)' }}>
                 {profile.avatar ? (
                   <img src={profile.avatar} alt="" className="w-full h-full object-cover" />
                 ) : (
-                  <User size={14} className="text-gray-400" />
+                  <User size={14} style={{ color: 'var(--text-tertiary)' }} />
                 )}
               </div>
-              {profile.name && <span className="text-xs font-semibold text-gray-700 hidden lg:block">{profile.name}</span>}
+              {profile.name && <span className="text-xs font-semibold hidden lg:block" style={{ color: 'var(--text-secondary)' }}>{profile.name}</span>}
             </Link>
           </div>
         </header>
