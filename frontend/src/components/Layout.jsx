@@ -4,6 +4,7 @@ import AdvisorChat from './AdvisorChat';
 import { useProfile } from '../context/ProfileContext';
 import { useLang } from '../context/LangContext';
 import { useTheme } from '../context/ThemeContext';
+import { supabase } from '../supabase';
 
 export default function Layout({ children }) {
   const location = useLocation();
@@ -57,7 +58,11 @@ export default function Layout({ children }) {
             <User size={18} />
             {t('nav.profile')}
           </Link>
-          <button onClick={() => { localStorage.removeItem('token'); window.location.href = "/login"; }}
+          <button onClick={async () => { 
+              await supabase.auth.signOut();
+              localStorage.removeItem('token'); 
+              window.location.href = "/login"; 
+            }}
             className="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-sm font-medium transition-colors"
             style={{ color: 'var(--text-tertiary)' }}>
             <LogOut size={18} />

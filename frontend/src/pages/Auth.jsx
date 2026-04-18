@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../supabase';
 
 export default function Auth({ setSession }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,15 +12,30 @@ export default function Auth({ setSession }) {
     e.preventDefault();
     if (!email || !password) return;
     
-    // In a real app we'd call the backend API here.
-    // For this hackathon demo, we will simulate a successful login/signup
-    // after 500ms and store a dummy JWT token.
-    setTimeout(() => {
-      const mockToken = "mock_jwt_token_" + Date.now();
-      localStorage.setItem('token', mockToken);
-      setSession(mockToken);
-      navigate('/app');
-    }, 500);
+    try {
+      if (isLogin) {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.auth.signUp({ 
+          email, 
+          password,
+          options: {
+            data: { full_name: email.split('@')[0] } // Default name
+          }
+        });
+        if (error) throw error;
+      }
+      
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        localStorage.setItem('token', session.access_token);
+        setSession(session.access_token);
+        navigate('/app');
+      }
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
