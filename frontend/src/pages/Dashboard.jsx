@@ -94,7 +94,17 @@ export default function Dashboard() {
             </thead>
             <tbody className="divide-y divide-gray-100 bg-white">
               {loading ? (
-                <tr><td colSpan="5" className="px-6 py-8 text-center text-gray-500 animate-pulse">Loading intelligence...</td></tr>
+                <>
+                  {[...Array(5)].map((_, i) => (
+                    <tr key={`skeleton-${i}`} className="animate-pulse bg-gray-50/50">
+                      <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-3/4"></div></td>
+                      <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-1/2"></div></td>
+                      <td className="px-6 py-4"><div className="h-4 bg-gray-200 rounded w-1/3"></div></td>
+                      <td className="px-6 py-4"><div className="h-6 bg-gray-200 rounded w-12"></div></td>
+                      <td className="px-6 py-4"><div className="h-6 bg-gray-200 rounded-full w-16"></div></td>
+                    </tr>
+                  ))}
+                </>
               ) : filteredLeads.map((lead, idx) => (
                 <tr key={idx} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4 font-medium text-gray-900">{lead.name}</td>

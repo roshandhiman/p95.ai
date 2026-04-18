@@ -6,8 +6,7 @@ export default function Layout({ children }) {
   const location = useLocation();
 
   const navItems = [
-    { name: 'Dashboard', path: '/', icon: <LayoutDashboard size={18} /> },
-    { name: 'Lead Intake', path: '/upload', icon: <Users size={18} /> },
+    { name: 'Intelligence', path: '/app', icon: <LayoutDashboard size={18} /> },
     { name: 'AI Outreach', path: '/outreach', icon: <Zap size={18} /> },
     { name: 'Mail Sender', path: '/sender', icon: <Mail size={18} /> },
   ];

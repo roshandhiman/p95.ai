@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Landing from './pages/Landing';
 import Login from './pages/Auth';
 import Dashboard from './pages/Dashboard';
-import UploadLeads from './pages/Upload';
 import Outreach from './pages/Outreach';
 import Sender from './pages/Sender';
 import Layout from './components/Layout';
@@ -25,11 +25,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login setSession={setSession} />} />
-        <Route path="/" element={<ProtectedRoute><Layout><Dashboard /></Layout></ProtectedRoute>} />
-        <Route path="/upload" element={<ProtectedRoute><Layout><UploadLeads /></Layout></ProtectedRoute>} />
+        <Route path="/app" element={<ProtectedRoute><Layout><Dashboard /></Layout></ProtectedRoute>} />
         <Route path="/outreach" element={<ProtectedRoute><Layout><Outreach /></Layout></ProtectedRoute>} />
         <Route path="/sender" element={<ProtectedRoute><Layout><Sender /></Layout></ProtectedRoute>} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

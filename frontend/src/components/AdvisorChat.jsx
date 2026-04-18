@@ -7,7 +7,6 @@ export default function AdvisorChat() {
     { sender: 'bot', text: 'Hi! I am your Outreach Advisor. Need help optimizing your Subject Lines or finding the right companies?' }
   ]);
   const [input, setInput] = useState('');
-  const [apiKey, setApiKey] = useState(''); // Keep empty as requested
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -17,11 +16,7 @@ export default function AdvisorChat() {
     
     // Mock simulation
     setTimeout(() => {
-      if (!apiKey) {
-        setMessages(prev => [...prev, { sender: 'bot', text: 'Please set your OpenAI/Anthropic API Key in settings first. For now, I suggest emphasizing their recent hiring activity in your subject line!' }]);
-      } else {
         setMessages(prev => [...prev, { sender: 'bot', text: `Analyzing "${currentInput}"... I recommend a multi-armed bandit approach testing 3 variants. Let's auto-generate them!` }]);
-      }
     }, 1000);
   };
 
@@ -61,13 +56,6 @@ export default function AdvisorChat() {
         </div>
 
         <div className="p-4 border-t border-gray-100 bg-gray-50 flex flex-col gap-2">
-          <input 
-            type="password"
-            placeholder="OpenAI API Key (Optional for Demo)"
-            className="input-field text-xs px-3 py-1.5 bg-white mb-2"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-          />
           <div className="relative">
             <input 
               type="text"
