@@ -142,15 +142,26 @@ export default function AdvisorChat() {
 
         <div className="p-4 border-t border-gray-100 bg-gray-50 flex flex-col gap-2">
           <div className="relative">
-            <input 
-              type="text"
+            <textarea 
               placeholder="Ask for advice..."
-              className="input-field pr-10 bg-white"
+              className="input-field pr-10 bg-white resize-none min-h-[40px] max-h-32 py-2.5"
+              rows={1}
               value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+              onChange={(e) => {
+                setInput(e.target.value);
+                // Simple auto-resize logic
+                e.target.style.height = 'inherit';
+                e.target.style.height = `${e.target.scrollHeight}px`;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                  e.target.style.height = 'inherit';
+                }
+              }}
             />
-            <button onClick={handleSend} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 px-2 py-1">
+            <button onClick={handleSend} className="absolute right-2 bottom-2 text-gray-400 hover:text-gray-900 px-2 py-1">
               <Send size={16} />
             </button>
           </div>
