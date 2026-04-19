@@ -1,8 +1,44 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { X, Send, Bot } from 'lucide-react';
 
 export default function AdvisorChat() {
   const [isOpen, setIsOpen] = useState(false);
+  const [width, setWidth] = useState(parseInt(localStorage.getItem('chatWidth')) || 320);
+  const [isResizing, setIsResizing] = useState(false);
+
+  const startResizing = useCallback((e) => {
+    e.preventDefault();
+    setIsResizing(true);
+  }, []);
+
+  const stopResizing = useCallback(() => {
+    setIsResizing(false);
+  }, []);
+
+  const resize = useCallback((e) => {
+    if (isResizing) {
+      const newWidth = window.innerWidth - e.clientX;
+      if (newWidth > 300 && newWidth < 800) {
+        setWidth(newWidth);
+        localStorage.setItem('chatWidth', newWidth);
+      }
+    }
+  }, [isResizing]);
+
+  useEffect(() => {
+    if (isResizing) {
+      window.addEventListener('mousemove', resize);
+      window.addEventListener('mouseup', stopResizing);
+    } else {
+      window.removeEventListener('mousemove', resize);
+      window.removeEventListener('mouseup', stopResizing);
+    }
+    return () => {
+      window.removeEventListener('mousemove', resize);
+      window.removeEventListener('mouseup', stopResizing);
+    };
+  }, [isResizing, resize, stopResizing]);
+
   const [messages, setMessages] = useState([
     { sender: 'bot', text: 'Hi! I am your Outreach Advisor. Need help optimizing your Subject Lines or finding the right companies?' }
   ]);
@@ -63,8 +99,19 @@ export default function AdvisorChat() {
 
       {/* Chat Panel */}
       <div 
-        className={`fixed top-0 right-0 h-full w-80 bg-white border-l border-gray-200 shadow-2xl transition-transform duration-300 z-50 flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed top-0 right-0 h-full bg-white border-l border-gray-200 shadow-2xl z-50 flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        style={{ 
+            width: `${width}px`,
+            transition: isResizing ? 'none' : 'transform 0.3s ease-in-out'
+        }}
       >
+        {/* Resize Handle */}
+        <div 
+          onMouseDown={startResizing}
+          className="absolute left-0 top-0 w-1.5 h-full cursor-col-resize hover:bg-blue-500/30 transition-colors z-[60]"
+          title="Drag to resize"
+        />
+
         <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
           <div className="flex items-center gap-2 font-bold text-gray-900">
             <Bot size={20} className="text-blue-500" /> AI Advisor
