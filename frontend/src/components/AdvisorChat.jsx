@@ -37,7 +37,16 @@ export default function AdvisorChat() {
                     ? `Subject: ${suggestion.email.subject}\n\n${suggestion.email.body}`
                     : suggestion.email;
 
-                const formattedText = `**Company:** ${suggestion.company}\n\n**Reason:** ${suggestion.reason}\n\n**Pain Points:** ${suggestion.pain_points}\n\n**Best Approach:** ${suggestion.approach}\n\n**Personalized Cold Email:**\n${emailContent}`;
+                let formattedText = `**Company:** ${suggestion.company}\n\n**Strategic Reason:** ${suggestion.reason}\n\n**Pain Points:** ${suggestion.pain_points}\n\n**Strategy:** ${suggestion.approach}`;
+                
+                if (emailContent) {
+                    formattedText += `\n\n**Email Outreach:**\n${emailContent}`;
+                }
+                
+                if (suggestion.linkedin) {
+                    formattedText += `\n\n**LinkedIn DM:**\n${suggestion.linkedin}`;
+                }
+
                 setMessages(prev => [...prev, { sender: 'bot', text: formattedText }]);
             });
         } else {
