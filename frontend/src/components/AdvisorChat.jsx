@@ -8,16 +8,45 @@ export default function AdvisorChat() {
   ]);
   const [input, setInput] = useState('');
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
     setMessages(prev => [...prev, { sender: 'user', text: input }]);
     const currentInput = input;
     setInput('');
     
-    // Mock simulation
-    setTimeout(() => {
-        setMessages(prev => [...prev, { sender: 'bot', text: `Analyzing "${currentInput}"... I recommend a multi-armed bandit approach testing 3 variants. Let's auto-generate them!` }]);
-    }, 1000);
+    // Add a temporary "typing" message
+    setMessages(prev => [...prev, { sender: 'bot', text: 'Analyzing your product and our company dataset...' }]);
+
+    try {
+        const response = await fetch('http://localhost:3001/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ productDescription: currentInput })
+        });
+        
+        if (!response.ok) throw new Error('API request failed');
+        
+        const data = await response.json();
+        
+        // Remove the "typing" message
+        setMessages(prev => prev.filter(m => m.text !== 'Analyzing your product and our company dataset...'));
+
+        if (data.suggestions && data.suggestions.length > 0) {
+            data.suggestions.forEach(suggestion => {
+                const emailContent = typeof suggestion.email === 'object' 
+                    ? `Subject: ${suggestion.email.subject}\n\n${suggestion.email.body}`
+                    : suggestion.email;
+
+                const formattedText = `**Company:** ${suggestion.company}\n\n**Reason:** ${suggestion.reason}\n\n**Pain Points:** ${suggestion.pain_points}\n\n**Best Approach:** ${suggestion.approach}\n\n**Personalized Cold Email:**\n${emailContent}`;
+                setMessages(prev => [...prev, { sender: 'bot', text: formattedText }]);
+            });
+        } else {
+            setMessages(prev => [...prev, { sender: 'bot', text: "I couldn't find any perfect matches in our current dataset, but I recommend targeting companies in similar high-growth sectors." }]);
+        }
+    } catch (error) {
+        setMessages(prev => prev.filter(m => m.text !== 'Analyzing your product and our company dataset...'));
+        setMessages(prev => [...prev, { sender: 'bot', text: "I'm having a bit of trouble connecting to my brain right now. Please try again in a few seconds!" }]);
+    }
   };
 
   return (
@@ -48,7 +77,7 @@ export default function AdvisorChat() {
         <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white text-sm">
           {messages.map((msg, idx) => (
             <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[85%] p-3 rounded-lg ${msg.sender === 'user' ? 'bg-gray-900 text-white rounded-br-none' : 'bg-gray-100 text-gray-800 rounded-bl-none'}`}>
+              <div className={`max-w-[85%] p-3 rounded-lg whitespace-pre-wrap ${msg.sender === 'user' ? 'bg-gray-900 text-white rounded-br-none' : 'bg-gray-100 text-gray-800 rounded-bl-none'}`}>
                 {msg.text}
               </div>
             </div>
