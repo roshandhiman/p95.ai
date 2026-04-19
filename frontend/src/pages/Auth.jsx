@@ -38,6 +38,13 @@ export default function Auth({ setSession }) {
     }
   };
 
+  const handleDemoMode = () => {
+    localStorage.setItem('demo_mode', 'true');
+    localStorage.setItem('token', 'demo-token');
+    setSession('demo-token');
+    navigate('/app');
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
       <div className="card max-w-sm w-full p-8 shadow-2xl border-gray-200">
@@ -80,6 +87,16 @@ export default function Auth({ setSession }) {
           <button type="submit" className="btn-primary w-full mt-6 py-2.5 shadow-md">
             {isLogin ? 'Sign In' : 'Sign Up'}
           </button>
+
+          {isLogin && (
+            <button 
+              type="button" 
+              onClick={handleDemoMode}
+              className="w-full mt-3 py-2 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors border border-gray-200"
+            >
+              Try Demo Mode
+            </button>
+          )}
         </form>
 
         <div className="mt-6 text-center text-sm text-gray-500">

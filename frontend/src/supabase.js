@@ -19,10 +19,22 @@ export const supabase = isValidUrl(supabaseUrl)
   : { 
       auth: { 
         onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }), 
-        getSession: async () => ({ data: { session: null } }),
-        signInWithPassword: async () => ({ error: { message: 'Supabase URL not configured' } }),
+        getSession: async () => ({ 
+          data: { 
+            session: localStorage.getItem('demo_mode') === 'true' 
+              ? { access_token: 'demo-token', user: { email: 'demo@p95.ai' } } 
+              : null 
+          } 
+        }),
+        signInWithPassword: async ({ email }) => ({ 
+          data: { user: { email }, session: { access_token: 'demo-token' } },
+          error: null 
+        }),
         signUp: async () => ({ error: { message: 'Supabase URL not configured' } }),
-        signOut: async () => ({ error: null })
+        signOut: async () => {
+          localStorage.removeItem('demo_mode');
+          return { error: null };
+        }
       }, 
       from: () => ({ 
         select: () => ({ 
