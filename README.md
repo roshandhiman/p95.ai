@@ -338,6 +338,6 @@ npm start
 
 *Built with ❤️ for ThinkRoot × Vortex Hackathon 2026*
 
-**Team P95.AI**
+**Team sudo su**
 
 </div>
