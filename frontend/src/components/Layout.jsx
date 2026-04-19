@@ -37,11 +37,7 @@ export default function Layout({ children }) {
             const isActive = location.pathname === item.path;
             return (
               <Link key={item.path} to={item.path}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-                style={{
-                  background: isActive ? 'var(--bg-tertiary)' : 'transparent',
-                  color: isActive ? 'var(--text-primary)' : 'var(--text-tertiary)',
-                }}>
+                className={`nav-link ${isActive ? 'active' : ''}`}>
                 {item.icon}
                 {item.name}
               </Link>
@@ -50,11 +46,7 @@ export default function Layout({ children }) {
         </nav>
 
         <div className="p-3 space-y-0.5" style={{ borderTop: '1px solid var(--border-primary)' }}>
-          <Link to="/profile" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-            style={{ 
-              background: location.pathname === '/profile' ? 'var(--bg-tertiary)' : 'transparent',
-              color: location.pathname === '/profile' ? 'var(--text-primary)' : 'var(--text-tertiary)'
-            }}>
+          <Link to="/profile" className={`nav-link ${location.pathname === '/profile' ? 'active' : ''}`}>
             <User size={18} />
             {t('nav.profile')}
           </Link>
@@ -63,8 +55,7 @@ export default function Layout({ children }) {
               localStorage.removeItem('token'); 
               window.location.href = "/"; 
             }}
-            className="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-sm font-medium transition-colors"
-            style={{ color: 'var(--text-tertiary)' }}>
+            className="nav-link w-full text-left">
             <LogOut size={18} />
             {t('nav.logout')}
           </button>

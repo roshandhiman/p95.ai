@@ -115,6 +115,22 @@
   .btn-secondary:hover:not(:disabled) {
     background: var(--bg-tertiary);
   }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-300;
+    color: var(--text-tertiary);
+  }
+
+  .nav-link:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    transform: translateX(6px);
+  }
+
+  .nav-link.active {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+  }
 }
 
 /* ======================== UTILITIES & OVERRIDES ======================== */
