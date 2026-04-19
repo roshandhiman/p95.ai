@@ -1,8 +1,11 @@
 import axios from 'axios';
 import seedData from './data.json';
 
-// In-memory database
-let leads = [...seedData];
+// In-memory database with auto-assigned IDs if missing
+let leads = seedData.map((l, idx) => ({ 
+  id: l.id || (idx + 1), 
+  ...l 
+}));
 
 // Delay helper to simulate network latency
 const delay = (ms, data) => new Promise(resolve => setTimeout(() => resolve({ data }), ms));
