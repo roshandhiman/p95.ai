@@ -13,6 +13,13 @@ const isValidUrl = (url) => {
 };
 
 // Initialize Supabase only if URL is valid. 
+if (!isValidUrl(supabaseUrl)) {
+  console.warn("Supabase URL is missing or invalid. Check your frontend/.env file.");
+}
+if (!supabaseKey) {
+  console.warn("Supabase Anon Key is missing. Check your frontend/.env file.");
+}
+
 // Otherwise, use a mock object to prevent the "White Screen" crash.
 export const supabase = isValidUrl(supabaseUrl)
   ? createClient(supabaseUrl, supabaseKey)

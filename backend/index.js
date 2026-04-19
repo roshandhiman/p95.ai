@@ -5,21 +5,56 @@ const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const Groq = require('groq-sdk');
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const dbPath = path.resolve(__dirname, '../database/data.json');
+const dbDir = path.resolve(__dirname, '../database');
 let leads = [];
 
-try {
-  const seedData = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
-  leads = seedData;
-  console.log(`Loaded ${leads.length} leads into memory.`);
-} catch (e) {
-  console.error("Failed to load data:", e);
+function loadData() {
+  const allLeads = [];
+  const filesToProcess = [];
+
+  // Helper to find all JSON files
+  function findJsonFiles(dir) {
+    if (!fs.existsSync(dir)) return;
+    const items = fs.readdirSync(dir, { withFileTypes: true });
+    for (const item of items) {
+      const fullPath = path.join(dir, item.name);
+      if (item.isDirectory()) {
+        findJsonFiles(fullPath);
+      } else if (item.name.endsWith('.json')) {
+        filesToProcess.push(fullPath);
+      }
+    }
+  }
+
+  findJsonFiles(dbDir);
+  
+  filesToProcess.forEach(file => {
+    try {
+      const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+      if (Array.isArray(data)) {
+        allLeads.push(...data);
+      } else if (data.suggestions) { // handle potential nested suggestions
+        allLeads.push(...data.suggestions);
+      }
+      console.log(`Loaded ${Array.isArray(data) ? data.length : 'unknown'} leads from ${path.basename(file)}`);
+    } catch (e) {
+      console.error(`Failed to load ${file}:`, e);
+    }
+  });
+
+  leads = allLeads;
+  console.log(`Total leads in memory: ${leads.length}`);
 }
+
+loadData();
 
 // ======================== AUTH ========================
 app.post('/api/auth', (req, res) => {
@@ -150,6 +185,70 @@ app.post('/api/sync-apollo', (req, res) => {
   setTimeout(() => {
     res.json({ success: true, count: 203, message: "Apollo API Sync Complete. 203 qualified ICP leads retrieved and scored." });
   }, 1500);
+});
+
+// ======================== AI CHAT INTERFACE ========================
+app.post('/api/analyze', async (req, res) => {
+  const { productDescription } = req.body;
+  if (!productDescription) return res.status(400).json({ error: 'Product description is required' });
+
+  try {
+    // We send a condensed version of leads to save tokens while keeping relevant info
+    const condensedLeads = leads.map(l => ({
+      name: l.name,
+      industry: l.industry,
+      size: l.size,
+      funding: l.funding,
+      techStack: l.techStack,
+      score: l.score
+    }));
+
+    const prompt = `
+    You are a Senior Sales Engineer. 
+    User's product: "${productDescription}"
+    
+    Select the top 3 target companies from:
+    ${JSON.stringify(condensedLeads)}
+
+    For each, provide:
+    1. **Strategic Reason**: Why they specifically need this based on their tech stack (${condensedLeads.map(l => l.techStack).join(', ')}) or funding.
+    2. **Technical Pain Point**: A deep-dive into a likely architectural or scale hurdle.
+    3. **Personalized Outreach**: 
+       - An "email" (Subject + Body) if the approach is Email.
+       - A "linkedin" (Short DM) if the approach is LinkedIn.
+    4. **Approach**: Single sentence strategy.
+
+    Return ONLY a JSON object with key "suggestions" containing an array of objects.
+    Keys: "company", "reason", "pain_points", "email", "linkedin", "approach"
+    IMPORTANT: No generic fluff. Be technical, punchy, and human.
+    `;
+
+    let completion;
+    let attempts = 0;
+    const maxAttempts = 3;
+
+    while (attempts < maxAttempts) {
+      try {
+        completion = await groq.chat.completions.create({
+          messages: [{ role: "user", content: prompt }],
+          model: "llama-3.3-70b-versatile",
+          response_format: { type: "json_object" }
+        });
+        break; // Success!
+      } catch (err) {
+        attempts++;
+        console.error(`Groq Attempt ${attempts} failed:`, err.message);
+        if (attempts === maxAttempts) throw err;
+        await new Promise(resolve => setTimeout(resolve, 1000 * attempts)); // Exponential backoff
+      }
+    }
+
+    const response = JSON.parse(completion.choices[0].message.content);
+    res.json(response);
+  } catch (error) {
+    console.error("Groq AI Error:", error);
+    res.status(500).json({ error: "Failed to analyze with AI" });
+  }
 });
 
 const PORT = process.env.PORT || 3001;

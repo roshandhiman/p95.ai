@@ -6,25 +6,37 @@ export default function Auth({ setSession }) {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) return;
+    setError('');
+    setSuccess('');
     
     try {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
       } else {
-        const { error } = await supabase.auth.signUp({ 
+        const { data, error } = await supabase.auth.signUp({ 
           email, 
           password,
           options: {
-            data: { full_name: email.split('@')[0] } // Default name
+            data: { full_name: email.split('@')[0] }
           }
         });
         if (error) throw error;
+        
+        if (data?.session) {
+          setSuccess('Account created! Logging you in...');
+        } else {
+          setSuccess('Account created! Sign in to continue.');
+          setIsLogin(true);
+          return;
+        }
       }
       
       const { data: { session } } = await supabase.auth.getSession();
@@ -34,7 +46,7 @@ export default function Auth({ setSession }) {
         navigate('/app');
       }
     } catch (err) {
-      alert(err.message);
+      setError(err.message);
     }
   };
 
@@ -59,6 +71,9 @@ export default function Auth({ setSession }) {
             {isLogin ? 'Enter your credentials to access the engine' : 'Initialize your workspace'}
           </p>
         </div>
+
+        {error && <div className="p-3 mb-4 text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg animate-in fade-in slide-in-from-top-1">{error}</div>}
+        {success && <div className="p-3 mb-4 text-sm text-green-600 bg-green-50 border border-green-100 rounded-lg animate-in fade-in slide-in-from-top-1">{success}</div>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
