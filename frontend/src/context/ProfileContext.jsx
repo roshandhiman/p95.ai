@@ -89,13 +89,21 @@ export function ProfileProvider({ children }) {
       if (error) throw error;
     } catch (error) {
       console.error('Error updating profile:', error.message);
-      alert('Failed to save profile to database.');
+      alert('Failed to save profile: ' + error.message);
     }
   };
 
   return (
     <ProfileContext.Provider value={{ profile, updateProfile, user, loading }}>
-      {!loading && children}
+      {!loading ? children : (
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-gray-500 font-medium font-sans">
+          <div className="w-10 h-10 border-4 border-gray-900 border-t-transparent rounded-full animate-spin mb-4 shadow-sm"></div>
+          <div className="animate-pulse flex flex-col items-center">
+            <span className="text-gray-900 font-bold text-lg tracking-tight mb-1">P95.AI</span>
+            <span className="text-[10px] uppercase tracking-widest text-gray-400">Initializing Platform</span>
+          </div>
+        </div>
+      )}
     </ProfileContext.Provider>
   );
 }

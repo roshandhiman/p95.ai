@@ -12,43 +12,54 @@ const isValidUrl = (url) => {
   }
 };
 
-// Initialize Supabase only if URL is valid. 
-if (!isValidUrl(supabaseUrl)) {
-  console.warn("Supabase URL is missing or invalid. Check your frontend/.env file.");
-}
-if (!supabaseKey) {
-  console.warn("Supabase Anon Key is missing. Check your frontend/.env file.");
-}
+// Log environment status for debugging (browser console)
+console.log('--- Supabase Config Check ---');
+console.log('URL status:', isValidUrl(supabaseUrl) ? 'VALID' : 'INVALID/MISSING');
+console.log('Key status:', supabaseKey ? 'PRESENT' : 'MISSING');
 
-// Otherwise, use a mock object to prevent the "White Screen" crash.
-export const supabase = isValidUrl(supabaseUrl)
-  ? createClient(supabaseUrl, supabaseKey)
-  : { 
-      auth: { 
-        onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }), 
-        getSession: async () => ({ 
-          data: { 
-            session: localStorage.getItem('demo_mode') === 'true' 
-              ? { access_token: 'demo-token', user: { email: 'demo@p95.ai' } } 
-              : null 
-          } 
-        }),
-        signInWithPassword: async ({ email }) => ({ 
-          data: { user: { email }, session: { access_token: 'demo-token' } },
-          error: null 
-        }),
-        signUp: async () => ({ error: { message: 'Supabase URL not configured' } }),
-        signOut: async () => {
-          localStorage.removeItem('demo_mode');
-          return { error: null };
-        }
-      }, 
-      from: () => ({ 
-        select: () => ({ 
-          eq: () => ({ 
-            single: () => ({ data: null, error: null }) 
-          }) 
-        }),
-        upsert: async () => ({ error: { message: 'Supabase not configured' } })
+// The Mock Object (fallback for development/errors)
+const mockSupabase = { 
+  auth: { 
+    onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }), 
+    getSession: async () => ({ 
+      data: { 
+        session: localStorage.getItem('demo_mode') === 'true' 
+          ? { access_token: 'demo-token', user: { email: 'demo@p95.ai' } } 
+          : null 
+      } 
+    }),
+    signInWithPassword: async ({ email }) => ({ 
+      data: { user: { email }, session: { access_token: 'demo-token' } },
+      error: null 
+    }),
+    signUp: async () => ({ error: { message: 'Supabase URL not configured' } }),
+    signOut: async () => {
+      localStorage.removeItem('demo_mode');
+      return { error: null };
+    }
+  }, 
+  from: () => ({ 
+    select: () => ({ 
+      eq: () => ({ 
+        single: () => ({ data: null, error: null }) 
       }) 
-    };
+    }),
+    upsert: async () => ({ error: { message: 'Supabase not configured' } })
+  }) 
+};
+
+// Initialize Supabase with extreme safety to avoid "Blank Screen" crashes
+export const supabase = (() => {
+  if (!isValidUrl(supabaseUrl) || !supabaseKey) {
+    console.warn("Supabase not configured. Falling back to mock.");
+    return mockSupabase;
+  }
+  
+  try {
+    console.log("Connecting to Supabase production...");
+    return createClient(supabaseUrl, supabaseKey);
+  } catch (e) {
+    console.error("Supabase Initialization Crash:", e.message);
+    return mockSupabase;
+  }
+})();
